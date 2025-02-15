@@ -6,14 +6,8 @@ export const metadata: Metadata = {
     title: "Blog | My Project",
     description: "About company",
   };
-  type Post = {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-  };
 
-async function getData(): Promise<Post[]> {
+async function getData() {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts',{
         next: {
             revalidate: 60,
@@ -23,14 +17,19 @@ async function getData(): Promise<Post[]> {
     if(!response.ok) throw new Error('Unable to fetch posts')
     return response.json();
 }
-
+type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+};
 export default async function Blog() {
-    const posts: Post[] = await getData();
+    const posts = await getData();
     return (
       <>
       <h1>Blog page</h1>
       <ul>
-        {posts.map((post) => (
+        {posts.map((post: Post) => (
             <li key={post.id}>
                 <Link href={`/blog/${post.id}`} >{post.title}</Link>
             </li>

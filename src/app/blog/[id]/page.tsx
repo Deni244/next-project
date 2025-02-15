@@ -1,7 +1,5 @@
 
 
-import { Metadata } from "next";
-
 async function getData(id: string) {
     const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`,{
         next: {
@@ -13,12 +11,10 @@ async function getData(id: string) {
 }
 
 type PageProps = {
-    params: {
-        id: string,
-    },
+    params: Promise<{ id: string }>,
 }
 
-export async function generateMetadata({ params }: PageProps) :Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps) {
     const {id} = await params;
     const post = await getData(id);
     return {
