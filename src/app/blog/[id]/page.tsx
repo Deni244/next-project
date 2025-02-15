@@ -12,20 +12,20 @@ async function getData(id: string) {
     return response.json();
 }
 
-type PostProps = {
+type PageProps = {
     params: {
         id: string,
     },
 }
 
-export async function generateMetadata({ params }: PostProps) :Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps) :Promise<Metadata> {
     const {id} = await params;
     const post = await getData(id);
     return {
         title: post.title,
     }
 }
-export default async function Post({ params }: PostProps) {
+export default async function Post({ params }: PageProps) {
     const {id} = await params;
     const post = await getData(id);
     return (
